@@ -9,6 +9,7 @@
     padding: 10px;
     overflow-y: auto;
     max-height: 500px;
+    font-family: fantasy;
 }
 
 #user-input {

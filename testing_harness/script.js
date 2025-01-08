@@ -1,9 +1,18 @@
+const chatLog = document.getElementById('chat-log');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
+
+let conversationHistory = [];
+
 sendButton.addEventListener('click', () => {
+   
     const userMessage = userInput.value.trim();
+    conversationHistory.push({ user: userMessage });
+            updateChatLog();
     if (userMessage !== '') {
         // Send API request to localhost:2222/api/chat
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:2222/api/chat', true);
+        xhr.open('get', 'http://localhost:2222/api/chat', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         const data = JSON.stringify({
@@ -17,6 +26,7 @@ sendButton.addEventListener('click', () => {
         });
 
         xhr.onload = function() {
+            
             console.log('Request complete:', xhr.status, xhr.statusText);
             if (xhr.status >= 200 && xhr.status < 300) {
                 try {
