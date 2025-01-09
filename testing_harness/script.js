@@ -12,7 +12,7 @@ sendButton.addEventListener('click', () => {
     if (userMessage !== '') {
         // Send API request to localhost:2222/api/chat
         const xhr = new XMLHttpRequest();
-        xhr.open('get', 'http://localhost:2222/api/chat', true);
+        xhr.open('POST', 'http://localhost:2222/api/chat', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         const data = JSON.stringify({
