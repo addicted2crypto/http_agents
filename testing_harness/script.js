@@ -1,6 +1,10 @@
+
 const chatLog = document.getElementById('chat-log');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
+
+// const _cfAccessClientSecret = process.env._cfAccessClientSecret;
+// const _clientId = 50ddaf8d3ec7aecd54e0d4e4d0845cbe.access;
 
 let conversationHistory = [];
 
@@ -14,6 +18,8 @@ sendButton.addEventListener('click', () => {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'http://localhost:2222/api/chat', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
 
         const data = JSON.stringify({
             model: "llama3.3:70b-instruct-q4_0",
