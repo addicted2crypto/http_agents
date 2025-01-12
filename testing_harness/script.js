@@ -3,8 +3,7 @@ const chatLog = document.getElementById('chat-log');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 
-// const _cfAccessClientSecret = process.env._cfAccessClientSecret;
-// const _clientId = 50ddaf8d3ec7aecd54e0d4e4d0845cbe.access;
+
 
 let conversationHistory = [];
 
