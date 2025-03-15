@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Harness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 50%;
+            height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Harness</h1>
+    <form id="test-form">
+        <label for="prompt">Prompt:</label>
+        <input type="text" id="prompt" name="prompt"><br><br>
+        <label for="model">Model:</label>
+        <select id="model" name="model">
+            <!-- Add more options here as needed -->
+            <option value="llama2">Llama2</option>
+            
+        </select><br><br>
+        
+        <button type="submit">Send Request</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('test-form');
+        const resultDiv = document.getElementById('result');
+
+        let conversationHistory = [];
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userMessage = document.getElementById('prompt').value;
+            const model = document.getElementById('model').value;
+
+            
+            conversationHistory.push({ role: "user", content: userMessage });
+            resultDiv.innerText = JSON.stringify(conversationHistory, null, 2);
+
+            try {
+                const requestBody = {
+                    "model": model,
+                    "messages": conversationHistory,
+                    "stream": false
+                }
+
+                
+                 fetch('http://localhost:11434/api/chat', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+        
+                conversationHistory.push({ role: "assistant", content: data.message });
+                resultDiv.innerText = JSON.stringify(conversationHistory, null, 2);
+
+            } catch (error) {
+                resultDiv.innerText = `Error: ${error.message}`;
+            }
+
+            document.getElementById('prompt').value = '';
+        });
+    </script>
+</body>
+</html>
