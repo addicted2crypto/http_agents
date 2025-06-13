@@ -30,7 +30,7 @@ sendButton.addEventListener('click', () => {
         const data = JSON.stringify({
             // model:"llama3.3:70b-instruct-q4_0",
             model: "llama2",
-            
+            //nead bearer in header
             messages: [
                 { role: "user", content: userMessage }
             ],
